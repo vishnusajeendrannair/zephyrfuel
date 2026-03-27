@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ZephyrFuel — Industrial Green Hydrogen</title>
+<meta name="description" content="ZephyrFuel installs and operates on-site green hydrogen systems at industrial customer facilities. No capex. Clean H₂ under a supply agreement."/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#060a0d;--bg2:#09101a;--bg3:#0d1621;
+  --sur:#111e2a;--sur2:#172635;
+  --teal:#00e8cc;--teal2:#00bfad;--teal3:#006e64;
+  --tg:rgba(0,232,204,.12);--tgb:rgba(0,232,204,.05);
+  --gold:#f5c842;--goldg:rgba(245,200,66,.1);
+  --border:rgba(0,232,204,.09);--border2:rgba(0,232,204,.22);
+  --t1:#deeee9;--t2:#6d9a93;--t3:#3a5852;--t4:#1a2e2a;
+  --fh:'Bebas Neue',Impact,'Arial Narrow',sans-serif;
+  --fs:'Syne','Segoe UI',sans-serif;
+  --fb:'DM Sans',system-ui,sans-serif;
+  --fm:'DM Mono','Consolas',monospace;
+  --r:6px;--rl:12px;--nh:64px;--mx:1200px;
+}
+body{background:var(--bg);color:var(--t1);font-family:var(--fb);font-weight:300;line-height:1.65;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--teal3);border-radius:2px}
+.page{display:none}.page.on{display:block}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+#nav.sc{background:rgba(6,10,13,.93);backdrop-filter:blur(20px);border-color:var(--border)}
+.nw{max-width:var(--mx);margin:0 auto;padding:0 32px;height:var(--nh);display:flex;align-items:center;justify-content:space-between}
+.nlogo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.lm{width:32px;height:32px;background:var(--teal);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--fs);font-weight:800;font-size:13px;color:var(--bg);box-shadow:0 0 14px rgba(0,232,204,.4);transition:box-shadow .3s}
+.nlogo:hover .lm{box-shadow:0 0 28px rgba(0,232,204,.7)}
+.lname{font-family:var(--fs);font-weight:700;font-size:15px;letter-spacing:.06em;color:var(--t1)}
+.nl{list-style:none;display:flex;align-items:center;gap:24px}
+.nl a{font-family:var(--fs);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);cursor:pointer;transition:color .2s;position:relative;padding-bottom:2px}
+.nl a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--teal);transform:scaleX(0);transform-origin:right;transition:transform .3s}
+.nl a:hover,.nl a.act{color:var(--teal)}
+.nl a:hover::after,.nl a.act::after{transform:scaleX(1);transform-origin:left}
+.ncta{padding:7px 16px;border:1px solid var(--border2)!important;border-radius:var(--r)!important}
+.ncta:hover{background:var(--tg)!important}
+.hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hbg span{display:block;width:22px;height:2px;background:var(--t1);border-radius:2px;transition:transform .3s,opacity .3s}
+.hbg.o span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hbg.o span:nth-child(2){opacity:0}.hbg.o span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#mm{position:fixed;top:var(--nh);left:0;right:0;background:rgba(6,10,13,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);z-index:99;max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+#mm.o{max-height:360px}
+#mm ul{list-style:none;padding:10px 0 16px}
+#mm li{border-bottom:1px solid var(--border)}
+#mm a{display:block;padding:14px 32px;font-family:var(--fs);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);cursor:pointer;transition:color .2s,padding-left .2s}
+#mm a:hover{color:var(--teal);padding-left:44px}
+/* SHARED */
+.sec{padding:88px 0}.sw{max-width:var(--mx);margin:0 auto;padding:0 32px}
+.slbl{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-family:var(--fm);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--teal)}
+.slbl::before{content:'';width:18px;height:1px;background:var(--teal)}
+.slbl.gld{color:var(--gold)}.slbl.gld::before{background:var(--gold)}
+.stit{font-family:var(--fh);font-size:clamp(44px,6vw,80px);line-height:.93;margin-bottom:20px}
+.ac{color:var(--teal)}.ag{color:var(--gold)}
+.sin{max-width:540px;font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:48px}
+/* BUTTONS */
+.bp,.bg2{display:inline-flex;align-items:center;gap:8px;font-family:var(--fs);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;border-radius:var(--r);cursor:pointer;transition:transform .2s,box-shadow .2s;border:none}
+.bp{padding:13px 26px;background:var(--teal);color:var(--bg)}
+.bp:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(0,232,204,.5)}
+.bg2{padding:12px 26px;background:transparent;color:var(--teal);border:1px solid var(--border2)}
+.bg2:hover{background:var(--tg);border-color:var(--teal);transform:translateY(-2px)}
+/* CARD */
+.card{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);padding:28px 22px;transition:border-color .3s,transform .3s}
+.card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.card h3{font-family:var(--fs);font-weight:800;font-size:15px;color:var(--t1);margin-bottom:8px}
+.card p{font-size:13px;color:var(--t2);line-height:1.75}
+/* PAGE HERO */
+.ph{background:var(--bg2);border-bottom:1px solid var(--border);padding:72px 32px 58px;margin-top:var(--nh)}
+.ph-w{max-width:var(--mx);margin:0 auto}
+.ph-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.ph-t{font-family:var(--fh);font-size:clamp(56px,8vw,100px);line-height:.9;color:var(--t1);margin-bottom:12px}
+.ph-s{font-size:15px;color:var(--t2);max-width:480px;line-height:1.75}
+/* TICKER */
+.ticker{height:36px;display:flex;align-items:center;overflow:hidden;background:linear-gradient(90deg,var(--teal3),var(--teal2),var(--teal3))}
+.tt{display:flex;white-space:nowrap;animation:tm 38s linear infinite}
+.ti{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(6,10,13,.75);padding:0 22px;display:flex;align-items:center;gap:9px}
+.ti::after{content:'✦';opacity:.35}.ti.g{color:rgba(6,10,13,.95)}
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:40px 32px}
+.fw{max-width:var(--mx);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.ft-tl{font-family:var(--fm);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--t3)}
+.flinks{display:flex;gap:22px;flex-wrap:wrap;justify-content:center}
+.flinks a{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);cursor:pointer;transition:color .2s}
+.flinks a:hover{color:var(--teal)}
+.fcopy{font-size:11px;color:var(--t4);max-width:560px}
+/* REVEAL */
+[data-r]{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
+[data-r="l"]{transform:translateX(-20px)}[data-r="r"]{transform:translateX(20px)}[data-r="s"]{transform:scale(.96)}
+[data-r].in{opacity:1;transform:none}
+/* HOME */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+#hc{position:absolute;inset:0;width:100%;height:100%}
+.hov{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 60% 80% at 12% 50%,transparent 0%,rgba(6,10,13,.55) 55%,var(--bg) 100%)}
+.hov2{position:absolute;bottom:0;left:0;right:0;height:160px;z-index:1;background:linear-gradient(transparent,var(--bg))}
+.hw{position:relative;z-index:2;max-width:var(--mx);margin:0 auto;padding:130px 32px 80px;width:100%}
+.ap{display:inline-flex;align-items:center;gap:9px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.28);border-radius:100px;padding:7px 16px;margin-bottom:28px;cursor:pointer;transition:background .2s}
+.ap:hover{background:rgba(245,200,66,.13)}
+.ap-s{font-size:12px}.ap-t{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}.ap-a{font-size:10px;color:rgba(245,200,66,.5)}
+.hhl{font-family:var(--fh);font-size:clamp(80px,13vw,164px);line-height:.88;margin-bottom:28px}
+.l1,.l2{display:block;color:var(--t1)}.l3{display:block;color:var(--teal);text-shadow:0 0 90px rgba(0,232,204,.45)}
+.hsub{max-width:460px;font-size:16px;font-weight:300;color:var(--t2);line-height:1.8;margin-bottom:40px}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+.hkpis{display:flex;gap:38px;align-items:center;flex-wrap:wrap}
+.kv{display:block;font-family:var(--fh);font-size:30px;color:var(--teal);letter-spacing:.03em}
+.kl{display:block;font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-top:2px}
+.kdiv{width:1px;height:38px;background:var(--border)}
+.sind{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px}
+.sl{font-family:var(--fm);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--t3)}
+.sd{width:1px;height:42px;background:linear-gradient(to bottom,var(--teal),transparent);animation:dp 2s infinite}
+.gv-wrap{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;background:var(--border);gap:1px;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-top:40px}
+.gv{padding:26px 18px;background:var(--sur);text-align:center}
+.gv.mid{background:linear-gradient(135deg,rgba(0,232,204,.04),var(--sur))}
+.gv-arr{background:var(--sur);display:flex;align-items:center;justify-content:center;color:var(--t4);padding:0 6px;font-size:15px}
+.gv-n{font-family:var(--fs);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--t2);margin-bottom:6px}
+.gv-r{font-family:var(--fh);font-size:26px;color:var(--t3)}
+.gv-r.lit{color:var(--teal)}
+.gv-s{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);margin-top:3px}
+.sol-g{display:grid;grid-template-columns:repeat(4,1fr);background:var(--border);gap:1px;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.sc{background:var(--sur);padding:32px 22px;position:relative;overflow:hidden;transition:background .3s}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);transform:scaleX(0);transform-origin:center;transition:transform .4s}
+.sc:hover{background:var(--sur2)}.sc:hover::after{transform:scaleX(1)}
+.sc-iw{width:40px;height:40px;border-radius:var(--r);border:1px solid var(--border2);background:var(--tgb);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:all .3s}
+.sc:hover .sc-iw{border-color:var(--teal);background:var(--tg)}
+.sc-iw svg{width:19px;height:19px;color:var(--teal)}
+.sc h3{font-family:var(--fs);font-weight:800;font-size:14px;color:var(--t1);margin-bottom:9px}
+.sc p{font-size:12px;color:var(--t2);line-height:1.75;margin-bottom:12px}
+.sc-tag{font-family:var(--fm);font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal3);border:1px solid var(--border);border-radius:3px;padding:2px 7px}
+.proof{background:var(--sur);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.proof-g{display:grid;grid-template-columns:repeat(4,1fr);max-width:var(--mx);margin:0 auto}
+.pf{padding:38px 22px;text-align:center;border-right:1px solid var(--border);transition:background .25s}
+.pf:last-child{border-right:none}.pf:hover{background:var(--sur2)}
+.pf-v{display:block;font-family:var(--fh);font-size:clamp(32px,4vw,50px);color:var(--teal);line-height:1;margin-bottom:7px}
+.pf-l{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+.cta-sec{background:linear-gradient(135deg,var(--bg),var(--bg3),var(--bg));padding:90px 32px;text-align:center;border-top:1px solid var(--border)}
+.cta-i{max-width:600px;margin:0 auto}
+.cta-t{font-family:var(--fh);font-size:clamp(44px,6vw,76px);line-height:.92;margin-bottom:16px}
+.cta-s{font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:32px}
+.cta-b{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* TECH PAGE */
+.how-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.how-c{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);padding:34px 22px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.how-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);transform:scaleX(0);transform-origin:center;transition:transform .4s}
+.how-c:hover{border-color:var(--border2);transform:translateY(-3px)}.how-c:hover::before{transform:scaleX(1)}
+.how-n{font-family:var(--fh);font-size:56px;color:var(--teal);opacity:.12;line-height:1;margin-bottom:14px;display:block;transition:opacity .3s}
+.how-c:hover .how-n{opacity:.38}
+.how-c h3{font-family:var(--fs);font-weight:800;font-size:16px;color:var(--t1);margin-bottom:10px}
+.how-c p{font-size:13px;color:var(--t2);line-height:1.8}
+.how-ico{font-size:28px;margin-bottom:12px;display:block}
+.spec-w{border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--border);transition:background .2s}
+.srow:last-child{border-bottom:none}.srow:hover{background:var(--tgb)}
+.sk{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.sv{font-family:var(--fm);font-size:11px;color:var(--teal);text-align:right}
+.ediag{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.ed-hdr{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.ed-t{font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--t3)}
+.ed-live{display:flex;align-items:center;gap:5px;font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.ld{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:blink 1.5s infinite}
+#esv{width:100%;display:block}
+.ed-act{height:2px;background:var(--bg);overflow:hidden}
+.ed-act-b{height:100%;width:28%;background:linear-gradient(90deg,transparent,var(--teal),transparent);animation:af 2.2s linear infinite}
+.ed-ft{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+.ef{padding:12px 10px;text-align:center;border-right:1px solid var(--border)}
+.ef:last-child{border-right:none}
+.efv{display:block;font-family:var(--fh);font-size:22px;color:var(--t1)}
+.efk{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+/* MODEL PAGE */
+.steps-g{display:grid;grid-template-columns:repeat(4,1fr);background:var(--border);gap:1px;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:40px}
+.step{background:var(--sur);padding:32px 20px;transition:background .3s}.step:hover{background:var(--sur2)}
+.step-n{font-family:var(--fh);font-size:54px;color:var(--teal);opacity:.14;line-height:1;margin-bottom:12px;display:block;transition:opacity .3s}
+.step:hover .step-n{opacity:.4}
+.step h4{font-family:var(--fs);font-weight:800;font-size:13px;color:var(--t1);margin-bottom:8px}
+.step p{font-size:12px;color:var(--t2);line-height:1.75}
+.mm-g{display:grid;grid-template-columns:repeat(4,1fr);background:var(--border);gap:1px;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.mmc{background:var(--sur);padding:24px 16px;text-align:center;transition:background .2s}.mmc:hover{background:var(--sur2)}
+.mmv{display:block;font-family:var(--fh);font-size:32px;color:var(--teal);margin-bottom:5px}
+.mmk{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3)}
+.mkt-g{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.mkt{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);padding:28px 22px;transition:transform .3s,border-color .3s}
+.mkt:hover{transform:translateY(-4px);border-color:var(--border2)}
+.mkt.pr{background:linear-gradient(145deg,var(--sur),rgba(0,232,204,.04));border-color:rgba(0,232,204,.17)}
+.mb{display:inline-block;background:var(--teal);color:var(--bg);font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;padding:3px 8px;border-radius:3px;margin-bottom:12px}
+.mi{font-size:24px;margin-bottom:10px;display:block}
+.mkt h3{font-family:var(--fs);font-weight:800;font-size:14px;color:var(--t1);margin-bottom:8px}
+.mkt p{font-size:12px;color:var(--t2);line-height:1.75;margin-bottom:14px}
+.mf{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal3);border-top:1px solid var(--border);padding-top:11px}
+.faq-g{display:grid;grid-template-columns:1fr 1fr;background:var(--border);gap:1px;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.fitem{background:var(--sur)}
+.fq{width:100%;background:none;border:none;cursor:pointer;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;transition:background .2s}
+.fq:hover{background:var(--sur2)}
+.fq-t{font-family:var(--fs);font-weight:700;font-size:13px;color:var(--t1)}
+.fq-i{width:20px;height:20px;border-radius:50%;border:1px solid var(--border2);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:transform .3s,background .2s}
+.fitem.open .fq-i{transform:rotate(45deg);background:var(--tg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);font-size:12px;color:var(--t2);line-height:1.75;padding:0 20px}
+.fitem.open .fa{max-height:180px;padding:0 20px 18px}
+/* ABOUT PAGE */
+.awb{background:linear-gradient(135deg,#140f00,#221800,#140f00);border:1px solid rgba(245,200,66,.22);border-radius:var(--rl);padding:48px 44px;margin-bottom:14px;position:relative;overflow:hidden}
+.awb::before{content:'';position:absolute;top:0;right:0;width:320px;height:320px;background:radial-gradient(circle,rgba(245,200,66,.08),transparent 70%);transform:translate(25%,-25%)}
+.awb::after{content:'★';font-family:var(--fh);font-size:180px;position:absolute;right:44px;top:50%;transform:translateY(-50%);color:rgba(245,200,66,.05);pointer-events:none}
+.ab-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,200,66,.5);margin-bottom:12px}
+.ab-t{font-family:var(--fh);font-size:clamp(40px,5vw,64px);line-height:.9;color:var(--gold);text-shadow:0 0 50px rgba(245,200,66,.3);margin-bottom:12px}
+.ab-org{font-family:var(--fs);font-weight:700;font-size:16px;color:rgba(245,200,66,.7);margin-bottom:10px}
+.ab-d{font-size:13px;color:rgba(245,200,66,.5);max-width:440px;line-height:1.75;margin-bottom:20px}
+.ab-ps{display:flex;gap:8px;flex-wrap:wrap}
+.ab-p{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.25);border-radius:100px;padding:5px 12px;font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.ac-g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.acc{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);padding:28px 22px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.acc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.acc:hover{border-color:var(--border2);transform:translateY(-3px)}.acc:hover::before{transform:scaleX(1)}
+.acc-tag{display:inline-block;background:var(--tg);border:1px solid var(--border2);border-radius:3px;padding:3px 8px;margin-bottom:11px;font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.acc h3{font-family:var(--fs);font-weight:800;font-size:15px;color:var(--t1);margin-bottom:8px}
+.acc p{font-size:12px;color:var(--t2);line-height:1.75}
+.acc-org{margin-top:12px;font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);border-top:1px solid var(--border);padding-top:11px}
+.rm-w{position:relative;padding-left:22px}
+.rm-ln{position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--teal),var(--teal3),transparent)}
+.rmi{position:relative;margin-bottom:30px;padding-left:24px}
+.rmi:last-child{margin-bottom:0}
+.rm-dot{position:absolute;left:-18px;top:5px;width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;transition:border-color .3s}
+.rm-dot::after{content:'';width:4px;height:4px;border-radius:50%;background:var(--t4);transition:background .3s}
+.rmi:hover .rm-dot{border-color:var(--teal3)}.rmi:hover .rm-dot::after{background:var(--teal3)}
+.rm-done .rm-dot{border-color:var(--teal);background:rgba(0,232,204,.05)}.rm-done .rm-dot::after{background:var(--teal)}
+.rm-now .rm-dot{border-color:var(--gold);background:rgba(245,200,66,.05);animation:rmP 2s infinite}.rm-now .rm-dot::after{background:var(--gold)}
+.rm-date{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+.rm-ti{font-family:var(--fs);font-weight:800;font-size:14px;color:var(--t1);margin-bottom:5px}
+.rm-d{font-size:12px;color:var(--t2);line-height:1.7;max-width:420px}
+.rm-b{display:inline-block;margin-top:6px;font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid}
+.rm-b.dn{color:var(--teal);border-color:rgba(0,232,204,.22);background:rgba(0,232,204,.04)}
+.rm-b.nw{color:var(--gold);border-color:rgba(245,200,66,.22);background:rgba(245,200,66,.04)}
+.rm-b.nx{color:var(--t3);border-color:var(--border)}
+.team-g{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tc{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);padding:28px 22px;transition:border-color .3s,transform .3s}
+.tc:hover{border-color:var(--border2);transform:translateY(-3px)}
+.tc-av{width:56px;height:56px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:22px;color:var(--teal);background:var(--sur2);margin-bottom:13px;transition:border-color .3s,box-shadow .3s}
+.tc:hover .tc-av{border-color:var(--teal);box-shadow:0 0 14px rgba(0,232,204,.16)}
+.tc h3{font-family:var(--fs);font-weight:800;font-size:14px;color:var(--t1);margin-bottom:3px}
+.tc-role{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:9px}
+.tc p{font-size:12px;color:var(--t2);line-height:1.7}
+.tc-tg{display:flex;flex-wrap:wrap;gap:4px;margin-top:11px}
+.tct{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);border:1px solid var(--border);border-radius:3px;padding:2px 6px}
+/* CONTACT PAGE */
+.ct-g{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:44px}
+.ctc{background:var(--sur);border:1px solid var(--border);border-radius:var(--rl);padding:34px 26px;transition:border-color .3s,transform .3s}
+.ctc:hover{border-color:var(--border2);transform:translateY(-4px)}
+.ctc h3{font-family:var(--fs);font-weight:800;font-size:15px;color:var(--t1);margin-bottom:9px}
+.ctc p{font-size:13px;color:var(--t2);line-height:1.8;margin-bottom:18px}
+.cem{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:11px;color:var(--teal);text-decoration:none;margin-bottom:7px;transition:color .2s}
+.cem:hover{color:var(--t1)}
+.exp{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.el{display:flex;align-items:flex-start;gap:13px;padding:14px 17px;background:var(--sur);border:1px solid var(--border);border-radius:var(--r);transition:border-color .2s}
+.el:hover{border-color:var(--border2)}
+.el-n{font-family:var(--fh);font-size:20px;color:var(--teal);opacity:.5;min-width:24px;line-height:1}
+.el-t h5{font-family:var(--fs);font-weight:700;font-size:12px;color:var(--t1);margin-bottom:2px}
+.el-t p{font-size:11px;color:var(--t2);line-height:1.65}
+/* GRID HELPER */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+/* ANIMATIONS */
+@keyframes tm{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes dp{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes af{from{transform:translateX(-200%)}to{transform:translateX(400%)}}
+@keyframes rmP{0%,100%{box-shadow:0 0 0 0 rgba(245,200,66,.4)}50%{box-shadow:0 0 0 5px rgba(245,200,66,0)}}
+/* RESPONSIVE */
+@media(max-width:1000px){.mkt-g{grid-template-columns:1fr}.steps-g{grid-template-columns:1fr 1fr}.mm-g{grid-template-columns:1fr 1fr}.how-g{grid-template-columns:1fr}.ac-g{grid-template-columns:1fr}.faq-g{grid-template-columns:1fr}.g2{grid-template-columns:1fr;gap:36px}}
+@media(max-width:768px){.nl{display:none}.hbg{display:flex}.sol-g{grid-template-columns:1fr 1fr}.proof-g{grid-template-columns:1fr 1fr}.gv-wrap{grid-template-columns:1fr}.gv-arr{display:none}.ct-g,.team-g{grid-template-columns:1fr}.sec{padding:64px 0}.sw{padding:0 20px}.hhl{font-size:clamp(64px,18vw,110px)}.hkpis{gap:18px}.kdiv{display:none}}
+@media(max-width:480px){.hw{padding:100px 20px 60px}.hbtns{flex-direction:column;align-items:flex-start}.cta-b{flex-direction:column;align-items:center}.sol-g{grid-template-columns:1fr}.steps-g{grid-template-columns:1fr}.mm-g{grid-template-columns:1fr 1fr}.awb{padding:32px 20px}}
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div class="nw">
+    <div class="nlogo" onclick="go('home')"><div class="lm">ZF</div><span class="lname">ZephyrFuel</span></div>
+    <ul class="nl">
+      <li><a onclick="go('home')" data-p="home">Home</a></li>
+      <li><a onclick="go('tech')" data-p="tech">Technology</a></li>
+      <li><a onclick="go('model')" data-p="model">Model</a></li>
+      <li><a onclick="go('about')" data-p="about">About</a></li>
+      <li><a onclick="go('contact')" data-p="contact" class="ncta">Contact</a></li>
+    </ul>
+    <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
+  </div>
+</div>
+<div id="mm"><ul>
+  <li><a onclick="go('home')">Home</a></li>
+  <li><a onclick="go('tech')">Technology</a></li>
+  <li><a onclick="go('model')">Model</a></li>
+  <li><a onclick="go('about')">About</a></li>
+  <li><a onclick="go('contact')">Contact</a></li>
+</ul></div>
+
+<!-- ═══ HOME ═══ -->
+<div class="page" id="p-home">
+<section id="hero">
+  <canvas id="hc"></canvas><div class="hov"></div><div class="hov2"></div>
+  <div class="hw">
+    <div class="ap" onclick="go('about')"><span class="ap-s">★</span><span class="ap-t">UCR Blackstone LaunchPad · Climate Action Ideas Winner</span><span class="ap-a">→</span></div>
+    <h1 class="hhl"><span class="l1">Molecules.</span><span class="l2">Not</span><span class="l3">Capex.</span></h1>
+    <p class="hsub">ZephyrFuel installs and operates on-site green hydrogen systems at industrial customer facilities — no capital expense, clean H₂ under a long-term supply agreement.</p>
+    <div class="hbtns">
+      <button class="bp" onclick="go('contact')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Request Site Assessment</button>
+      <button class="bg2" onclick="go('model')">How the Model Works</button>
+    </div>
+    <div class="hkpis">
+      <div><span class="kv">200–1,500</span><span class="kl">kg/day per site</span></div>
+      <div class="kdiv"></div>
+      <div><span class="kv">BOO</span><span class="kl">Build-Own-Operate</span></div>
+      <div class="kdiv"></div>
+      <div><span class="kv">AEM</span><span class="kl">Electrolyzer Stack</span></div>
+      <div class="kdiv"></div>
+      <div><span class="kv">IRA</span><span class="kl">Policy-Supported (U.S.)</span></div>
+    </div>
+  </div>
+  <div class="sind"><span class="sl">explore</span><div class="sd"></div></div>
+</section>
+
+<div class="ticker"><div class="tt">
+  <div class="ti g">★ UCR Blackstone LaunchPad · Climate Action Ideas Winner · April 2025</div>
+  <div class="ti">Build-Own-Operate · Zero Customer CapEx</div>
+  <div class="ti">InterPhase Incubator S'26 · 4th Sector Innovations</div>
+  <div class="ti">AEM Electrolysis · Industrial Scale</div>
+  <div class="ti">Clean H₂ Production Incentives (IRA-Eligible)</div>
+  <div class="ti">Instantaneous Accelerator · Global Program</div>
+  <div class="ti g">★ UCR Blackstone LaunchPad · Climate Action Ideas Winner · April 2025</div>
+  <div class="ti">Build-Own-Operate · Zero Customer CapEx</div>
+  <div class="ti">InterPhase Incubator S'26 · 4th Sector Innovations</div>
+  <div class="ti">AEM Electrolysis · Industrial Scale</div>
+  <div class="ti">Clean H₂ Production Incentives (IRA-Eligible)</div>
+  <div class="ti">Instantaneous Accelerator · Global Program</div>
+</div></div>
+
+<section class="sec" style="background:var(--bg)"><div class="sw">
+  <div class="slbl" data-r>The Gap</div>
+  <h2 class="stit" data-r>The majors serve giants.<br/>Cylinders serve labs.<br/><span class="ac">Nobody serves the middle.</span></h2>
+  <p class="sin" data-r>Mid-scale industrial operators consuming 200–1,500 kg/day are structurally underserved by every major industrial gas supplier. That is the market we are built for.</p>
+  <div class="gv-wrap" data-r>
+    <div class="gv"><div class="gv-n">Major Suppliers</div><div class="gv-r">&gt;10,000 kg</div><div class="gv-s">Air Products · Linde · Air Liquide</div></div>
+    <div class="gv-arr">→</div>
+    <div class="gv mid"><div class="gv-n" style="color:var(--teal)">ZephyrFuel Zone</div><div class="gv-r lit">200–1,500 kg</div><div class="gv-s" style="color:var(--teal3)">Underserved · Our Beachhead</div></div>
+    <div class="gv-arr">→</div>
+    <div class="gv"><div class="gv-n">Cylinder / Tube</div><div class="gv-r">&lt;50 kg</div><div class="gv-s">Lab &amp; Small Industrial</div></div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>Solution</div>
+  <h2 class="stit" data-r>Hydrogen as a <span class="ac">Service</span></h2>
+  <p class="sin" data-r>We own the infrastructure. You buy the molecules. Zero capex, zero maintenance — clean hydrogen on-site under a long-term supply agreement.</p>
+  <div class="sol-g">
+    <div class="sc" data-r data-delay="0"><div class="sc-iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><h3>Zero Capex</h3><p>ZephyrFuel finances and owns the electrolyzer. You pay per kg of hydrogen delivered — converting capital expense to a predictable operational cost.</p><span class="sc-tag">OpEx Conversion</span></div>
+    <div class="sc" data-r data-delay="80"><div class="sc-iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="10" rx="1"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg></div><h3>On-Site Generation</h3><p>Modular electrolyzers installed at your facility. No trucks, no storage risk, no distributor markups. H₂ produced where it is consumed.</p><span class="sc-tag">Site-Integrated</span></div>
+    <div class="sc" data-r data-delay="160"><div class="sc-iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Price Stability</h3><p>Multi-year supply agreements with pricing indexed to power costs — no spot-market exposure in your hydrogen cost line.</p><span class="sc-tag">Long-Term Agreement</span></div>
+    <div class="sc" data-r data-delay="240"><div class="sc-iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>Assessment First</h3><p>Every engagement starts with a paid site assessment — validating economics before any commitment. Fees credited toward future supply contracts.</p><span class="sc-tag">Low-Risk Entry</span></div>
+  </div>
+</div></section>
+
+<div class="proof"><div class="proof-g">
+  <div class="pf" data-r><span class="pf-v">★</span><span class="pf-l">UCR Blackstone LaunchPad Winner 2025</span></div>
+  <div class="pf" data-r><span class="pf-v">S'26</span><span class="pf-l">InterPhase Incubator Cohort</span></div>
+  <div class="pf" data-r><span class="pf-v">BOO</span><span class="pf-l">Build-Own-Operate Model</span></div>
+  <div class="pf" data-r><span class="pf-v">IRA</span><span class="pf-l">Policy-Supported U.S. Economics</span></div>
+</div></div>
+
+<div class="cta-sec"><div class="cta-i">
+  <h2 class="cta-t" data-r>Ready to evaluate<br/><span class="ac">your site?</span></h2>
+  <p class="cta-s" data-r>Tell us your facility, hydrogen demand, and power situation. We will evaluate the economics and come back with a clear picture of whether on-site generation makes sense.</p>
+  <div class="cta-b" data-r><button class="bp" onclick="go('contact')">Request Site Assessment</button><button class="bg2" onclick="go('model')">Explore the Model</button></div>
+</div></div>
+
+<footer><div class="fw"><div class="nlogo" onclick="go('home')"><div class="lm">ZF</div><span class="lname">ZephyrFuel</span></div><p class="ft-tl">Industrial Green Hydrogen · Build-Own-Operate</p><nav class="flinks"><a onclick="go('home')">Home</a><a onclick="go('tech')">Technology</a><a onclick="go('model')">Model</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></nav><p class="fcopy">© 2025 ZephyrFuel. All rights reserved. Financial figures referenced are modeled projections.</p></div></footer>
+</div>
+
+<!-- ═══ TECHNOLOGY ═══ -->
+<div class="page" id="p-tech">
+<div class="ph"><div class="ph-w"><div class="ph-lbl">Our Stack</div><h1 class="ph-t">AEM<br/>Electrolysis</h1><p class="ph-s">Anion Exchange Membrane technology for continuous mid-scale industrial hydrogen — without platinum-group metals.</p></div></div>
+
+<section class="sec" style="background:var(--bg)"><div class="sw">
+  <div class="slbl" data-r>How It Works</div>
+  <h2 class="stit" data-r>Electricity in.<br/><span class="ac">Hydrogen out.</span></h2>
+  <p class="sin" data-r>Our electrolyzers split water into hydrogen and oxygen using electricity. The simpler the explanation, the better the technology.</p>
+  <div class="how-g">
+    <div class="how-c" data-r data-delay="0"><span class="how-ico">⚡</span><span class="how-n">01</span><h3>Power Goes In</h3><p>Electricity — ideally from low-cost renewables in ERCOT West Texas or India solar markets at $0.018–0.030/kWh — is applied across two electrodes. Cheaper power equals lower hydrogen cost. That is the fundamental economics.</p></div>
+    <div class="how-c" data-r data-delay="100"><span class="how-ico">💧</span><span class="how-n">02</span><h3>Water Splits</h3><p>Water fed into the system is split at the electrodes into hydrogen and oxygen. Our AEM membrane sits between them — allowing ions to pass through while keeping the gas streams completely separate and pure.</p></div>
+    <div class="how-c" data-r data-delay="200"><span class="how-ico">🟢</span><span class="how-n">03</span><h3>H₂ to Your Process</h3><p>Clean hydrogen exits at up to 35 bar — ready for your industrial process. No trucks, no cylinders, no distributor. Produced on-demand at your facility, around the clock.</p></div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>ZF500 Module</div>
+  <h2 class="stit" data-r>Stack <span class="ac">Architecture</span></h2>
+  <p class="sin" data-r>Click any component in the diagram to learn what it does.</p>
+  <div class="g2">
+    <div data-r="l">
+      <div class="spec-w">
+        <div class="srow"><span class="sk">Technology</span><span class="sv">Anion Exchange Membrane (AEM)</span></div>
+        <div class="srow"><span class="sk">Electrode Approach</span><span class="sv">Non-precious metal catalysts</span></div>
+        <div class="srow"><span class="sk">Electrolyte</span><span class="sv">Alkaline aqueous solution</span></div>
+        <div class="srow"><span class="sk">Max Operating Pressure</span><span class="sv">Up to 35 bar</span></div>
+        <div class="srow"><span class="sk">Architecture</span><span class="sv">Modular cassette-based stack</span></div>
+        <div class="srow"><span class="sk">Module Output</span><span class="sv">~240 kg H₂ / day</span></div>
+        <div class="srow"><span class="sk">Deployment Format</span><span class="sv">Containerized · site-integrated</span></div>
+        <div class="srow"><span class="sk">Validation Status</span><span class="sv">Simulation &amp; R&D stage</span></div>
+      </div>
+    </div>
+    <div data-r="r">
+      <div class="ediag">
+        <div class="ed-hdr"><span class="ed-t">ZF500 Module — Click any part</span><span class="ed-live"><span class="ld"></span>Interactive</span></div>
+        <svg id="esv" viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="aG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff5030" stop-opacity=".6"/><stop offset="100%" stop-color="#ff4060" stop-opacity=".15"/></linearGradient>
+            <linearGradient id="cG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e8cc" stop-opacity=".15"/><stop offset="100%" stop-color="#00e8cc" stop-opacity=".6"/></linearGradient>
+            <linearGradient id="mG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9b59f5"/><stop offset="100%" stop-color="#6b29d5"/></linearGradient>
+          </defs>
+          <rect width="440" height="280" fill="#0d1621"/>
+          <g stroke="rgba(0,232,204,.03)" stroke-width=".5"><line x1="0" y1="56" x2="440" y2="56"/><line x1="0" y1="112" x2="440" y2="112"/><line x1="0" y1="168" x2="440" y2="168"/><line x1="0" y1="224" x2="440" y2="224"/><line x1="88" y1="0" x2="88" y2="280"/><line x1="176" y1="0" x2="176" y2="280"/><line x1="264" y1="0" x2="264" y2="280"/><line x1="352" y1="0" x2="352" y2="280"/></g>
+          <text x="14" y="14" font-family="DM Mono,monospace" font-size="7" fill="rgba(0,232,204,.35)" letter-spacing="1">H₂O IN</text>
+          <line x1="14" y1="18" x2="14" y2="52" stroke="rgba(0,232,204,.25)" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <polygon points="10,50 14,58 18,50" fill="rgba(0,232,204,.35)"/>
+          <text x="426" y="14" font-family="DM Mono,monospace" font-size="7" fill="rgba(0,232,204,.65)" letter-spacing="1" text-anchor="end">H₂ OUT</text>
+          <line x1="426" y1="18" x2="426" y2="52" stroke="rgba(0,232,204,.5)" stroke-width="1.2"/>
+          <polygon points="422,18 426,10 430,18" fill="rgba(0,232,204,.5)"/>
+          <text x="14" y="272" font-family="DM Mono,monospace" font-size="7" fill="rgba(255,80,60,.45)" letter-spacing="1">O₂ OUT</text>
+          <line x1="14" y1="220" x2="14" y2="266" stroke="rgba(255,80,60,.35)" stroke-width="1.2"/>
+          <polygon points="10,262 14,270 18,262" fill="rgba(255,80,60,.35)"/>
+          <g id="ez-a" style="cursor:pointer"><rect x="28" y="62" width="60" height="156" rx="3" fill="url(#aG)" stroke="rgba(255,80,60,.45)" stroke-width="1"/><text x="58" y="136" font-family="DM Mono,monospace" font-size="9" fill="rgba(255,130,60,.9)" text-anchor="middle" letter-spacing="1">ANODE</text><text x="58" y="152" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(255,100,60,.65)" text-anchor="middle">OER</text><text x="58" y="166" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(255,100,60,.45)" text-anchor="middle">O₂ Evolution</text></g>
+          <g id="ez-m" style="cursor:pointer"><rect x="200" y="58" width="40" height="164" rx="2" fill="url(#mG)" opacity=".65" stroke="rgba(155,89,245,.55)" stroke-width="1"/><text x="220" y="138" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(200,160,255,.85)" text-anchor="middle">AEM</text><text x="220" y="194" font-family="DM Mono,monospace" font-size="7" fill="rgba(200,160,255,.6)" text-anchor="middle">OH⁻ →</text></g>
+          <g id="ez-c" style="cursor:pointer"><rect x="352" y="62" width="60" height="156" rx="3" fill="url(#cG)" stroke="rgba(0,232,204,.45)" stroke-width="1"/><text x="382" y="136" font-family="DM Mono,monospace" font-size="9" fill="rgba(0,232,204,.9)" text-anchor="middle" letter-spacing="1">CATHODE</text><text x="382" y="152" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(0,232,204,.65)" text-anchor="middle">HER</text><text x="382" y="166" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(0,232,204,.45)" text-anchor="middle">H₂ Production</text></g>
+          <g id="ez-e"><rect x="92" y="62" width="104" height="156" rx="2" fill="rgba(0,100,80,.12)" stroke="rgba(0,180,140,.15)" stroke-width="1"/><text x="144" y="144" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(0,200,160,.4)" text-anchor="middle">ANOLYTE</text><rect x="244" y="62" width="104" height="156" rx="2" fill="rgba(0,80,120,.12)" stroke="rgba(0,160,200,.15)" stroke-width="1"/><text x="296" y="144" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(0,180,220,.4)" text-anchor="middle">CATHOLYTE</text></g>
+          <g id="ez-v" style="cursor:pointer"><rect x="158" y="238" width="124" height="30" rx="4" fill="rgba(0,232,204,.05)" stroke="rgba(0,232,204,.22)" stroke-width="1"/><text x="220" y="252" font-family="DM Mono,monospace" font-size="8" fill="rgba(0,232,204,.55)" text-anchor="middle" letter-spacing="1">CELL VOLTAGE</text><text x="220" y="263" font-family="DM Mono,monospace" font-size="10" fill="#00e8cc" text-anchor="middle">Optimized for Efficiency</text></g>
+          <g opacity=".42">
+            <circle r="2.2" fill="#9b59f5"><animateMotion dur="2.2s" repeatCount="indefinite" path="M200,88 L92,88"/></circle>
+            <circle r="2.2" fill="#9b59f5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0.55s" path="M200,126 L92,126"/></circle>
+            <circle r="2.2" fill="#9b59f5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="1.1s" path="M200,164 L92,164"/></circle>
+            <circle r="1.8" fill="#00e8cc"><animateMotion dur="1.6s" repeatCount="indefinite" path="M352,98 L440,98"/></circle>
+            <circle r="1.8" fill="#00e8cc"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.5s" path="M352,148 L440,148"/></circle>
+            <circle r="1.8" fill="#ff6030"><animateMotion dur="1.6s" repeatCount="indefinite" path="M28,116 L0,116"/></circle>
+            <circle r="1.8" fill="#ff6030"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.65s" path="M28,156 L0,156"/></circle>
+          </g>
+        </svg>
+        <div class="ed-act"><div class="ed-act-b"></div></div>
+        <div class="ed-ft"><div class="ef"><span class="efv">500 kW</span><span class="efk">Module Power</span></div><div class="ef"><span class="efv">~240 kg</span><span class="efk">H₂ / Day</span></div><div class="ef"><span class="efv">35 bar</span><span class="efk">Max Pressure</span></div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>Performance</div>
+  <h2 class="stit" data-r>Designed to <span class="ac">Improve</span></h2>
+  <p class="sin" data-r>Our R&D program is focused on driving efficiency higher and cost per kilogram lower. Validation is ongoing — detailed specs available in our private technical brief.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px" data-r>
+    <div class="card"><h3>Efficiency-First Design</h3><p>Lower cell voltage means less electricity consumed per kilogram produced. Our simulation and catalyst work is focused on closing the gap between current targets and best-in-class benchmarks.</p></div>
+    <div class="card"><h3>Simulation-Backed</h3><p>Active finite element modeling of the membrane-electrode assembly guides catalyst and stack optimization — before physical prototyping at scale.</p></div>
+    <div class="card" style="border-color:rgba(0,232,204,.18)"><h3>Validation in Progress</h3><p>Performance targets are simulation-based. We do not publish specific voltage figures or competitor comparisons externally until results are independently validated.</p></div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>Why AEM?</div>
+  <h2 class="stit" data-r>Best of Both <span class="ac">Technologies</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px" data-r>
+    <div class="card"><h3>vs. PEM</h3><p>PEM electrolysis requires platinum-group metal catalysts — expensive and supply-constrained. AEM achieves comparable performance using earth-abundant, lower-cost electrode materials.</p></div>
+    <div class="card"><h3>vs. Alkaline</h3><p>Traditional alkaline electrolyzers need large, centralized footprints. AEM delivers comparable capital costs with a compact, modular, cassette-based design suited for distributed industrial sites.</p></div>
+    <div class="card" style="border-color:rgba(0,232,204,.18)"><h3>The ZephyrFuel Edge</h3><p>Our advantage is AEM architecture combined with modular site-integrated deployment and a BOO commercial structure purpose-built for the mid-scale industrial segment the majors structurally ignore.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="fw"><div class="nlogo" onclick="go('home')"><div class="lm">ZF</div><span class="lname">ZephyrFuel</span></div><p class="ft-tl">Industrial Green Hydrogen · Build-Own-Operate</p><nav class="flinks"><a onclick="go('home')">Home</a><a onclick="go('tech')">Technology</a><a onclick="go('model')">Model</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></nav><p class="fcopy">© 2025 ZephyrFuel. All rights reserved.</p></div></footer>
+</div>
+
+<!-- ═══ MODEL ═══ -->
+<div class="page" id="p-model">
+<div class="ph"><div class="ph-w"><div class="ph-lbl">How We Work</div><h1 class="ph-t">Build-Own-<br/>Operate</h1><p class="ph-s">We own the infrastructure. You buy the molecules. Each site is financed through a dedicated Special Purpose Vehicle.</p></div></div>
+
+<section class="sec" style="background:var(--bg)"><div class="sw">
+  <div class="slbl" data-r>The Process</div>
+  <h2 class="stit" data-r>Four Steps to <span class="ac">On-Site H₂</span></h2>
+  <p class="sin" data-r>From first conversation to hydrogen flowing at your facility — here is exactly how every engagement works.</p>
+  <div class="steps-g" data-r>
+    <div class="step"><span class="step-n">01</span><h4>Site Assessment</h4><p>Paid engagement evaluating your demand, power costs, logistics, and economics. Fees credited toward any future supply contract. No commitment required.</p></div>
+    <div class="step"><span class="step-n">02</span><h4>SPV Formation</h4><p>A project-level Special Purpose Vehicle is created per site. This ring-fences project risk and enables non-recourse debt financing based on contracted cash flows.</p></div>
+    <div class="step"><span class="step-n">03</span><h4>Installation</h4><p>ZephyrFuel finances, procures, and installs the modular electrolyzer. All integration and commissioning handled by us. You do not own or maintain the equipment.</p></div>
+    <div class="step"><span class="step-n">04</span><h4>Supply Agreement</h4><p>Long-term supply contract — you pay per kg of hydrogen delivered. ZephyrFuel operates and maintains the asset. Pricing indexed to power costs, not spot markets.</p></div>
+  </div>
+  <div class="mm-g" data-r>
+    <div class="mmc"><span class="mmv">BOO</span><span class="mmk">Build-Own-Operate</span></div>
+    <div class="mmc"><span class="mmv">PF</span><span class="mmk">Project-Finance Structured</span></div>
+    <div class="mmc"><span class="mmv">IRA</span><span class="mmk">Policy-Supported (U.S.)</span></div>
+    <div class="mmc"><span class="mmv">SPV</span><span class="mmk">Per-Site Project Vehicle</span></div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>Project Finance</div>
+  <h2 class="stit" data-r>Built for <span class="ac">Bankability</span></h2>
+  <div class="g2">
+    <div data-r="l">
+      <p style="font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:18px">Each ZephyrFuel deployment is structured for project-level debt financing from day one. The SPV isolates project risk, and the long-term supply agreement provides contracted cash flows that underpin lender underwriting.</p>
+      <p style="font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:26px">For qualifying U.S. deployments, clean hydrogen production incentives under the Inflation Reduction Act may provide additional economic support — structured through appropriate tax equity arrangements.</p>
+      <button class="bg2" onclick="go('contact')">Request the Investor Brief →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" data-r="r">
+      <div class="card"><h3>No Customer CapEx</h3><p>Customers pay only per kg delivered. Zero capital commitment required to begin.</p></div>
+      <div class="card"><h3>Long-Term Agreement</h3><p>Multi-year contracts create the stable contracted revenue that project lenders require.</p></div>
+      <div class="card"><h3>Power-Cost Indexed</h3><p>Pricing tied to electricity input costs — not volatile spot hydrogen markets.</p></div>
+      <div class="card"><h3>Policy-Supported</h3><p>Qualifying U.S. deployments may benefit from production incentives improving project economics without affecting the core BOO structure.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>Target Applications</div>
+  <h2 class="stit" data-r>Where the <span class="ac">Economics Work</span></h2>
+  <p class="sin" data-r>Consistent high-volume demand plus low-cost power. The math requires both conditions.</p>
+  <div class="mkt-g">
+    <div class="mkt pr" data-r="l"><span class="mb">Primary Focus</span><span class="mi">🏭</span><h3>Continuous Industrial Use</h3><p>Industrial processes running 24/7 — edible oil hydrogenation, metal treatment, specialty chemical production. High utilization is the key variable that makes on-site economics work.</p><div class="mf">Edible Oil Hydrogenation · Metal Treatment · Chemical Production</div></div>
+    <div class="mkt" data-r><span class="mi">⚡</span><h3>Cheap-Power Markets</h3><p>ERCOT West Texas and India solar PPA markets at $0.018–0.030/kWh. Low input power cost is the primary economic lever. We deploy where power is cheapest.</p><div class="mf">ERCOT West Texas · Rajasthan · Gujarat</div></div>
+    <div class="mkt" data-r="r"><span class="mi">🚌</span><h3>Transportation &amp; Mobility</h3><p>Transit agencies and freight operators seeking FCEV fueling — a secondary vertical using curtailed renewable energy surplus.</p><div class="mf">Transit Agencies · Fleet Operators · FCEV Hubs</div></div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>FAQ</div>
+  <h2 class="stit" data-r>Common <span class="ac">Questions</span></h2>
+  <div class="faq-g" data-r>
+    <div class="fitem"><button class="fq"><span class="fq-t">What does zero capex mean for us?</span><span class="fq-i">+</span></button><div class="fa">ZephyrFuel finances, owns, and maintains the entire electrolyzer system. You pay only for hydrogen delivered per kg under a long-term supply contract. No equipment purchase, no depreciation, no maintenance staff, no asset on your balance sheet.</div></div>
+    <div class="fitem"><button class="fq"><span class="fq-t">What does a site assessment cover?</span><span class="fq-i">+</span></button><div class="fa">Our assessment covers your hydrogen demand profile, facility power costs, logistics requirements, preliminary system sizing, and pro-forma economics specific to your location. Fees are credited toward any future supply contract.</div></div>
+    <div class="fitem"><button class="fq"><span class="fq-t">What scale of consumption do you serve?</span><span class="fq-i">+</span></button><div class="fa">We focus on 200–1,500 kg/day per site. Below this range, truck delivery remains competitive. Above it, major industrial gas companies have established on-site solutions. Our BOO model is designed for the mid-scale segment those companies structurally ignore.</div></div>
+    <div class="fitem"><button class="fq"><span class="fq-t">What power cost makes this work?</span><span class="fq-i">+</span></button><div class="fa">Our model targets electricity at $0.018–0.030/kWh, available in ERCOT West Texas and Indian solar PPA markets. High-cost grid power does not support competitive green hydrogen economics and is not our deployment target.</div></div>
+    <div class="fitem"><button class="fq"><span class="fq-t">What are the U.S. clean hydrogen incentives?</span><span class="fq-i">+</span></button><div class="fa">The Inflation Reduction Act includes production incentives for clean hydrogen meeting lifecycle emissions thresholds. For qualifying U.S. deployments, these incentives can materially improve project economics. The specific structure depends on deployment geography, power source, and project configuration.</div></div>
+    <div class="fitem"><button class="fq"><span class="fq-t">How does the SPV structure work?</span><span class="fq-i">+</span></button><div class="fa">Each Special Purpose Vehicle is a standalone project entity. Your supply agreement is with the SPV — structurally independent from ZephyrFuel's corporate balance sheet. Project financial health is determined by the site's own contracted cash flows.</div></div>
+  </div>
+</div></section>
+
+<footer><div class="fw"><div class="nlogo" onclick="go('home')"><div class="lm">ZF</div><span class="lname">ZephyrFuel</span></div><p class="ft-tl">Industrial Green Hydrogen · Build-Own-Operate</p><nav class="flinks"><a onclick="go('home')">Home</a><a onclick="go('tech')">Technology</a><a onclick="go('model')">Model</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></nav><p class="fcopy">© 2025 ZephyrFuel. All rights reserved. Financial figures referenced are modeled projections.</p></div></footer>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="page" id="p-about">
+<div class="ph"><div class="ph-w"><div class="ph-lbl">Our Story</div><h1 class="ph-t">Building<br/>ZephyrFuel</h1><p class="ph-s">From a clear market gap to a validated BOO model — backed by competitive recognition and leading entrepreneurship programs.</p></div></div>
+
+<section class="sec" id="awards" style="background:var(--bg)"><div class="sw">
+  <div class="slbl gld" data-r>Recognition</div>
+  <h2 class="stit" data-r>Earned <span class="ag">Validation</span></h2>
+  <div class="awb" data-r="s">
+    <div class="ab-ey">Competitive Award · April 9, 2025</div>
+    <div class="ab-t">Climate Action<br/>Ideas Competition</div>
+    <div class="ab-org">UC Riverside Blackstone LaunchPad</div>
+    <p class="ab-d">ZephyrFuel awarded the $1,500 Climate Action Ideas Award by UC Riverside's Blackstone LaunchPad — presented under the University of California Office of the President. Signed by Dr. Francisca Reyes, Blackstone LaunchPad Campus Director.</p>
+    <div class="ab-ps"><div class="ab-p"><span>★</span><span>$1,500 Award</span></div><div class="ab-p"><span>UC Riverside · Blackstone LaunchPad</span></div><div class="ab-p"><span>April 9, 2025</span></div></div>
+  </div>
+  <div class="ac-g" data-r>
+    <div class="acc"><span class="acc-tag">Incubator · Spring 2026 Cohort</span><h3>InterPhase Incubator S'26</h3><p>A rigorous stakeholder discovery curriculum to validate real market opportunity. ZephyrFuel is in the Spring 2026 cohort — running structured customer discovery for our mid-scale industrial hydrogen beachhead.</p><div class="acc-org">4th Sector Innovations · Chapman University · learn.4thsi.com</div></div>
+    <div class="acc"><span class="acc-tag">Accelerator · 12-Week Global Program</span><h3>Instantaneous Accelerator</h3><p>A 12-week hybrid program focused on scaling ventures properly and effectively. ZephyrFuel is an active participant building toward our first reference deployment.</p><div class="acc-org">4th Sector Innovations Academy · learn.4thsi.com</div></div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>Timeline</div>
+  <h2 class="stit" data-r>Roadmap to <span class="ac">First Site</span></h2>
+  <div class="g2">
+    <div class="rm-w" data-r="l">
+      <div class="rm-ln"></div>
+      <div class="rmi rm-done"><div class="rm-dot"></div><div class="rm-date">2023 — India · 2024 — U.S. Structuring</div><div class="rm-ti">Company Founded</div><p class="rm-d">ZephyrFuel founded in India in 2023. U.S. entity structuring in progress — Delaware C-Corp and California registration under evaluation. AEM electrolyzer technical direction established.</p><span class="rm-b dn">Completed</span></div>
+      <div class="rmi rm-done"><div class="rm-dot"></div><div class="rm-date">2025 — Q1</div><div class="rm-ti">UCR Blackstone LaunchPad Award</div><p class="rm-d">$1,500 Climate Action Ideas Competition winner. UC Riverside Blackstone LaunchPad, April 9, 2025. First competitive external validation.</p><span class="rm-b" style="color:var(--gold);border-color:rgba(245,200,66,.22);background:rgba(245,200,66,.04)">★ Award Won</span></div>
+      <div class="rmi rm-done"><div class="rm-dot"></div><div class="rm-date">2025 — Q2/Q3</div><div class="rm-ti">Customer Discovery &amp; Beachhead</div><p class="rm-d">Rigorous discovery: steel (pivoted), data centers (pivoted). Food-grade hydrogenation validated as primary beachhead — continuous demand, high purity, clear supply chain disruption opportunity.</p><span class="rm-b dn">Completed</span></div>
+      <div class="rmi rm-done"><div class="rm-dot"></div><div class="rm-date">2025 — Q4</div><div class="rm-ti">Financial Model Locked</div><p class="rm-d">SPV financial model finalized. Mentor Briefing v6 completed — fully cited, external-ready. BOO structure and project-level economics validated.</p><span class="rm-b dn">Completed</span></div>
+      <div class="rmi rm-now"><div class="rm-dot"></div><div class="rm-date">2026 — Q1/Q2 · Now</div><div class="rm-ti">InterPhase S'26 · First Paid Assessment</div><p class="rm-d">Active InterPhase cohort member. Targeting first paid site assessment. COMSOL AEM simulation in active development. Provisional patent preparation in progress.</p><span class="rm-b nw">In Progress</span></div>
+      <div class="rmi"><div class="rm-dot"></div><div class="rm-date">2026 — Q3/Q4</div><div class="rm-ti">Pre-Seed Capital Round</div><p class="rm-d">Targeting $500K–$1.5M pre-seed from angels, DOE SBIR/STTR, and accelerator programs to fund prototype development and working capital bridge.</p><span class="rm-b nx">Upcoming</span></div>
+      <div class="rmi"><div class="rm-dot"></div><div class="rm-date">2027</div><div class="rm-ti">First SPV · Reference Site</div><p class="rm-d">First project SPV capitalized. Module deployed at reference site. First hydrogen delivered under long-term supply agreement.</p><span class="rm-b nx">Target</span></div>
+    </div>
+    <div data-r="r" style="padding-top:8px">
+      <h3 style="font-family:var(--fs);font-weight:800;font-size:21px;color:var(--t1);margin-bottom:15px">Why ZephyrFuel?</h3>
+      <p style="font-size:14px;color:var(--t2);line-height:1.85;margin-bottom:16px">The industrial decarbonization challenge is not a technology problem — electrolysis physics have been understood for over 200 years. The challenge is economic structure: who owns the asset, who takes the risk, and how do you make a multi-million-dollar infrastructure investment bankable at a mid-scale industrial site that has no interest in being in the infrastructure business.</p>
+      <p style="font-size:14px;color:var(--t2);line-height:1.85;margin-bottom:16px">ZephyrFuel's answer is a Build-Own-Operate model financed through per-site Special Purpose Vehicles — giving customers clean hydrogen without capital exposure, and giving investors a contracted cash flow asset backed by long-term industrial supply agreements.</p>
+      <p style="font-size:14px;color:var(--t2);line-height:1.85;margin-bottom:26px">We started with customer discovery — two pivots, one validated beachhead. We did the financial engineering. Now we are executing on the first site.</p>
+      <button class="bp" onclick="go('contact')">Talk to the Founder →</button>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" style="background:var(--bg);border-top:1px solid var(--border)"><div class="sw">
+  <div class="slbl" data-r>The Team</div>
+  <h2 class="stit" data-r>Founder <span class="ac">Led</span></h2>
+  <div class="team-g" data-r>
+    <div class="tc"><div class="tc-av">V</div><h3>Vishnu Sajeendran Nair</h3><div class="tc-role">Founder &amp; CEO</div><p>Building ZephyrFuel from the ground up — customer discovery, financial model architecture, patent strategy, and stakeholder development. MBA Candidate at UC Riverside focused on green hydrogen project finance and BOO model design.</p><div class="tc-tg"><span class="tct">MBA · UC Riverside</span><span class="tct">Project Finance</span><span class="tct">Customer Discovery</span><span class="tct">BOO Strategy</span></div></div>
+    <div class="tc" style="border-style:dashed;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:220px"><div style="font-size:36px;opacity:.2;margin-bottom:11px">+</div><h3 style="color:var(--t3)">Building the Team</h3><div class="tc-role" style="color:var(--t3)">Roles Opening</div><p style="font-size:12px;color:var(--t4);max-width:200px;margin-top:7px">Technical co-founder, project finance, and business development as we move toward first deployment. Reach out early.</p><div style="margin-top:16px"><button class="bg2" style="font-size:10px" onclick="go('contact')">Get in Touch</button></div></div>
+  </div>
+</div></section>
+
+<footer><div class="fw"><div class="nlogo" onclick="go('home')"><div class="lm">ZF</div><span class="lname">ZephyrFuel</span></div><p class="ft-tl">Industrial Green Hydrogen · Build-Own-Operate</p><nav class="flinks"><a onclick="go('home')">Home</a><a onclick="go('tech')">Technology</a><a onclick="go('model')">Model</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></nav><p class="fcopy">© 2025 ZephyrFuel. All rights reserved.</p></div></footer>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div class="page" id="p-contact">
+<div class="ph"><div class="ph-w"><div class="ph-lbl">Reach Us</div><h1 class="ph-t">Let's Talk<br/>Hydrogen</h1><p class="ph-s">Whether you're running a facility, looking at project equity, or want to understand the economics — start here.</p></div></div>
+
+<section class="sec" style="background:var(--bg)"><div class="sw">
+  <div class="slbl" data-r>Direct Contact</div>
+  <h2 class="stit" data-r>Reach the <span class="ac">Founder</span></h2>
+  <p class="sin" data-r>At this stage, you're talking directly to Vishnu. No sales team, no intake form — straight conversation.</p>
+  <div class="ct-g">
+    <div class="ctc" data-r="l"><h3>🏭 Industrial Operators</h3><p>Consuming hydrogen at industrial scale and want to know if on-site generation could reduce costs and eliminate supply-chain risk? Bring your demand profile and power situation. We'll evaluate the economics honestly.</p><a href="mailto:mail.vishnusajeendrannair@gmail.com" class="cem">mail.vishnusajeendrannair@gmail.com</a><a href="mailto:vishnu.sajeendrannair@email.ucr.edu" class="cem">vishnu.sajeendrannair@email.ucr.edu</a><div style="margin-top:16px"><a href="mailto:mail.vishnusajeendrannair@gmail.com?subject=ZephyrFuel%20Site%20Assessment" class="bp" style="font-size:11px">Request Site Assessment</a></div></div>
+    <div class="ctc" data-r="r"><h3>💼 Investors &amp; Partners</h3><p>Looking at project equity, debt financing, or technical partnerships? ZephyrFuel is building toward its first reference deployment and pre-seed raise. Company overview and financial model summary available on request.</p><a href="mailto:mail.vishnusajeendrannair@gmail.com" class="cem">mail.vishnusajeendrannair@gmail.com</a><div style="margin-top:16px"><a href="mailto:mail.vishnusajeendrannair@gmail.com?subject=ZephyrFuel%20Investor%20Inquiry" class="bg2" style="font-size:11px">Request Company Brief</a></div></div>
+  </div>
+  <div style="max-width:500px;margin-top:56px" data-r>
+    <div class="slbl">What Happens Next</div>
+    <h3 class="stit" style="font-size:clamp(30px,4vw,50px)">A real <span class="ac">conversation</span></h3>
+    <ul class="exp">
+      <li class="el"><span class="el-n">01</span><div class="el-t"><h5>You email. We respond within 48 hours.</h5><p>No auto-responders. A direct reply from Vishnu with a clear next step.</p></div></li>
+      <li class="el"><span class="el-n">02</span><div class="el-t"><h5>30-minute discovery call.</h5><p>We ask about your facility, demand, power, and current supply. You ask anything. No pitch deck required on your end.</p></div></li>
+      <li class="el"><span class="el-n">03</span><div class="el-t"><h5>Honest back-of-envelope economics.</h5><p>After the call we will tell you quickly whether the numbers are likely to work before anyone spends time on a formal assessment.</p></div></li>
+      <li class="el"><span class="el-n">04</span><div class="el-t"><h5>Paid site assessment if there's a fit.</h5><p>Formal paid assessment if economics look compelling. Fees credited toward any future supply contract.</p></div></li>
+    </ul>
+  </div>
+</div></section>
+
+<footer><div class="fw"><div class="nlogo" onclick="go('home')"><div class="lm">ZF</div><span class="lname">ZephyrFuel</span></div><p class="ft-tl">Industrial Green Hydrogen · Build-Own-Operate</p><nav class="flinks"><a onclick="go('home')">Home</a><a onclick="go('tech')">Technology</a><a onclick="go('model')">Model</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></nav><p class="fcopy">© 2025 ZephyrFuel. All rights reserved. Financial figures referenced are modeled projections.</p></div></footer>
+</div>
+
+<script>
+// ═══ SPA ROUTER ═══
+var pages={home:'p-home',tech:'p-tech',model:'p-model',about:'p-about',contact:'p-contact'};
+var cur='';
+var heroReady=false;
+
+function go(name){
+  if(!pages[name])name='home';
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+  document.getElementById(pages[name]).classList.add('on');
+  cur=name;
+  window.scrollTo(0,0);
+  document.querySelectorAll('.nl a[data-p]').forEach(function(a){
+    a.classList.toggle('act',a.getAttribute('data-p')===name);
+  });
+  document.getElementById('hbg').classList.remove('o');
+  document.getElementById('mm').classList.remove('o');
+  setTimeout(reveal,60);
+  if(name==='home'&&!heroReady){heroReady=true;startHero()}
+  history.pushState({p:name},'','#'+name);
+}
+
+window.addEventListener('popstate',function(e){
+  var p=(location.hash||'#home').slice(1);
+  go(p in pages?p:'home');
+});
+
+// ═══ NAV SCROLL ═══
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('sc',window.scrollY>40)},{passive:true});
+
+// ═══ HAMBURGER ═══
+document.getElementById('hbg').addEventListener('click',function(){
+  this.classList.toggle('o');
+  document.getElementById('mm').classList.toggle('o');
+});
+
+// ═══ REVEAL ON SCROLL ═══
+function reveal(){
+  var pg=document.getElementById(pages[cur]);
+  if(!pg)return;
+  var els=pg.querySelectorAll('[data-r]:not(.in)');
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var d=parseInt(e.target.getAttribute('data-delay')||0);
+        setTimeout(function(){e.target.classList.add('in')},d);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+  els.forEach(function(el){io.observe(el)});
+}
+
+// ═══ FAQ ═══
+document.querySelectorAll('.fq').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.closest('.fitem'),wasOpen=item.classList.contains('open');
+    item.closest('.faq-g').querySelectorAll('.fitem').forEach(function(f){f.classList.remove('open')});
+    if(!wasOpen)item.classList.add('open');
+  });
+});
+
+// ═══ ELECTROLYZER TOOLTIPS ═══
+var tip=document.createElement('div');
+tip.style.cssText='position:fixed;z-index:500;pointer-events:none;background:rgba(6,10,13,.96);border:1px solid rgba(0,232,204,.22);border-radius:6px;padding:13px 16px;max-width:240px;opacity:0;transition:opacity .2s;font-family:DM Sans,sans-serif';
+document.body.appendChild(tip);
+var einfo={
+  'ez-a':{t:'Anode — Oxygen Evolution',b:'The anode drives the Oxygen Evolution Reaction (OER) — converting hydroxide ions into oxygen gas. We use earth-abundant, non-precious-metal catalysts rather than the expensive platinum-group metals required by PEM systems.'},
+  'ez-c':{t:'Cathode — Hydrogen Production',b:'The cathode drives the Hydrogen Evolution Reaction (HER) — splitting water to produce hydrogen gas. Hydrogen exits at up to 35 bar, ready for your industrial process.'},
+  'ez-m':{t:'AEM Membrane — Ion Transport',b:'The Anion Exchange Membrane conducts hydroxide ions (OH⁻) from cathode to anode while keeping hydrogen and oxygen streams completely separate and pure. The defining component of AEM electrolysis.'},
+  'ez-v':{t:'Cell Voltage — Why It Matters',b:'Lower operating voltage = higher efficiency = lower cost per kilogram. The gap between actual operating voltage and the theoretical minimum represents energy losses at the electrodes and through the membrane — the focus of our ongoing R&D.'}
+};
+document.addEventListener('mouseover',function(e){
+  var el=e.target.closest('#ez-a,#ez-c,#ez-m,#ez-v');
+  if(!el){tip.style.opacity='0';return}
+  var id=el.id,d=einfo[id];
+  if(!d)return;
+  tip.innerHTML='<div style="font-family:Syne,sans-serif;font-weight:800;font-size:12px;color:#00e8cc;margin-bottom:6px;text-transform:uppercase">'+d.t+'</div><div style="font-size:11px;color:#6d9a93;line-height:1.65">'+d.b+'</div>';
+  tip.style.opacity='1';
+});
+document.addEventListener('mousemove',function(e){
+  if(tip.style.opacity==='0')return;
+  var sw=tip.offsetWidth||240,sh=tip.offsetHeight||80;
+  tip.style.left=Math.min(e.clientX+16,innerWidth-sw-8)+'px';
+  tip.style.top=Math.max(e.clientY-sh-8,8)+'px';
+});
+document.addEventListener('mouseout',function(e){
+  if(!e.target.closest('#ez-a,#ez-c,#ez-m,#ez-v'))tip.style.opacity='0';
+});
+
+// ═══ HERO CANVAS ═══
+function startHero(){
+  var cv=document.getElementById('hc');
+  if(!cv)return;
+  var c=cv.getContext('2d');
+  var W,H,pts=[],mx=-9999,my=-9999;
+  function P(){this.reset(true)}
+  P.prototype.reset=function(r){
+    this.x=r?Math.random()*W:W*(.05+Math.random()*.9);
+    this.y=r?Math.random()*H:H+10;
+    this.vx=(Math.random()-.5)*.4;this.vy=-.18-Math.random()*.6;
+    this.r=.4+Math.random()*1.6;this.life=0;this.max=100+Math.random()*260;
+    this.hex=Math.random()>.72;this.hs=6+Math.random()*16;this.rot=Math.random()*Math.PI;
+  };
+  P.prototype.step=function(){
+    var dx=this.x-mx,dy=this.y-my,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<90){this.vx+=dx/d*.06;this.vy+=dy/d*.06}
+    this.x+=this.vx;this.y+=this.vy;this.life++;this.rot+=.004;
+    var t=this.life/this.max;
+    this.a=t<.1?t*10:t>.75?(1-t)*4:1;
+    if(this.life>this.max)this.reset(false);
+  };
+  P.prototype.draw=function(){
+    var a=this.a*.26;
+    if(this.hex){
+      c.save();c.translate(this.x,this.y);c.rotate(this.rot);c.beginPath();
+      for(var i=0;i<6;i++){var ang=Math.PI/3*i-Math.PI/6;i===0?c.moveTo(this.hs*Math.cos(ang),this.hs*Math.sin(ang)):c.lineTo(this.hs*Math.cos(ang),this.hs*Math.sin(ang))}
+      c.closePath();c.strokeStyle='rgba(0,232,204,'+a+')';c.lineWidth=.7;c.stroke();c.restore();
+    } else {
+      c.beginPath();c.arc(this.x,this.y,this.r,0,Math.PI*2);
+      c.fillStyle='rgba(0,232,204,'+(a*2)+')';c.fill();
+    }
+  };
+  function lines(){
+    var vis=pts.filter(function(p){return p.a>.08});
+    for(var i=0;i<vis.length;i++)for(var j=i+1;j<vis.length;j++){
+      var dx=vis[i].x-vis[j].x,dy=vis[i].y-vis[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<95){c.beginPath();c.moveTo(vis[i].x,vis[i].y);c.lineTo(vis[j].x,vis[j].y);c.strokeStyle='rgba(0,232,204,'+((1-d/95)*Math.min(vis[i].a,vis[j].a)*.06)+')';c.lineWidth=.5;c.stroke()}
+    }
+  }
+  function build(){pts=[];var n=Math.min(90,Math.floor(W*H/5500));for(var i=0;i<n;i++)pts.push(new P())}
+  function frame(){
+    c.clearRect(0,0,W,H);
+    var g=c.createRadialGradient(W*.18,H*.5,0,W*.18,H*.5,W*.36);
+    g.addColorStop(0,'rgba(0,232,204,.04)');g.addColorStop(1,'transparent');
+    c.fillStyle=g;c.fillRect(0,0,W,H);
+    lines();pts.forEach(function(p){p.step();p.draw()});
+    requestAnimationFrame(frame);
+  }
+  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;build()}
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+  new ResizeObserver(resize).observe(cv);
+  resize();frame();
+}
+
+// ═══ INIT ═══
+var initPage=(location.hash||'#home').slice(1);
+go(initPage in pages?initPage:'home');
+</script>
+</body>
+</html>
